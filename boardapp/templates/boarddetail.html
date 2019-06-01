@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <div class="container jumbotron">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{board.title}}</h3>
+                    <h6 class="card-subtitle mb-2 test-muted">{{board.name}}님, {{board.pub_date}}</h6>
+                    <p class="card-text">{{board.body}}</p>
+                    <a href="{% url 'update' board.id %}"><input type="button" value="수정하기"></a>
+                    <a href="{% url 'delete' board.id %}"><input type='button' value="삭제하기"></a>
+                    <a href="{% url 'board' %}"><input type='button' value="전체게시판으로"></a>
+                </div>
+                <br>
+                <div class='container'>
+                    <h6><strong>Comments</strong></h6>
+                    {% for comment in board_detail.all %}
+                        <span>글쓴날짜</span>{{comment.created_date}}<br>
+                        <span>글쓴이</span><strong>{{comment.comment_author}}</strong><br>
+                        <span>글쓴내용</span><p>{{comment.comment_contents}}</p>
+                    {% empty %}
+                        <p> 아직 댓글이 없습니다! </p>
+                    {% endfor %}
+                    <h6><strong>댓글 쓰기!</strong></h6>
+                    <div class="container">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="comment_author" placeholder="이름" ><br>
+                            <textarea name="comment_contents" placeholder="댓글내용"></textarea><br>
+                            <button type="submit">등록</button>
+                        </form>
+                    </div>
+                </div>
+              </div>
+            <br>
+            </div>
+        </div>
+
+{% endblock %}

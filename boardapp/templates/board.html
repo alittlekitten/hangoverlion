@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+
+  {% for board in posts %}
+        <div class="card">
+          <div class="card-body">
+            <a href="{% url 'boarddetail' board.id %}" class="card-link"><h5 class="card-title">{{board.title}}</h5></a>
+            <h6>{{board.name}}님, {{board.pub_date|date:"Y-m-d"}}</h6>
+          </div>
+        </div>
+  {% endfor %}
+
+  <br>
+
+    
+
+  {% if posts.has_previous %}
+  <a href="?page=1"><strong><<&nbsp;</strong></a>
+  <a href="?page={{posts.previous_page_number}}"><strong><&nbsp;&nbsp;</strong></a>
+  {% endif %}
+
+  <span>{{posts.number}}</span>
+  <span>of</span>
+  <span>{{posts.paginator.num_pages}}&nbsp;&nbsp;</span>
+
+  {% if posts.has_next %}
+  <a href="?page={{posts.next_page_number}}"><strong>>&nbsp;</strong></a>
+  <a href="?page={{posts.paginator.num_pages}}"><strong>>></strong></a>
+  {% endif %}
+
+  &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'new' %}"><input type='button' class="btn btn-outline-success my-2 my-sm-0" value="글쓰기"></a>
+
+{% endblock %}
+
+
+    </body>
+</html>
